@@ -21,6 +21,8 @@
 #    include <rtx_os.h>
 #endif
 
+#include "stm32h7xx_it.h"
+
 #ifdef __NEWLIB__
 /*
  * This function overloads a weak definition provided by Newlib. It is called
@@ -92,7 +94,7 @@ const struct {
         [NVIC_USER_IRQ_OFFSET + PendSV_IRQn - 1] =
             (uintptr_t)(arch_exception_invalid),
         [NVIC_USER_IRQ_OFFSET + SysTick_IRQn - 1] =
-            (uintptr_t)(arch_exception_invalid),
+            (uintptr_t)(SysTick_Handler),
 #endif
     },
 };

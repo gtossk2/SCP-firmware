@@ -289,6 +289,14 @@ ifeq ($(BUILD_HAS_DEBUGGER),yes)
     LIBS_y += $(call lib_path,debugger$(BUILD_SUFFIX))
 endif
 
+# Add the STM32 HAL Library
+INCLUDES += $(STM32_HAL_DIR)/git/Inc
+INCLUDES += $(STM32_HAL_DIR)/include
+ifeq ($(BUILD_HAS_STM32_HAL),yes)
+		LIB_TARGETS_y += $(STM32_HAL_DIR)/src
+		LIBS_y += $(call lib_path,contrib/stm32h7xx_hal$(BUILD_SUFFIX))
+endif
+
 #
 # Additional library dependencies
 #

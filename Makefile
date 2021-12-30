@@ -26,6 +26,7 @@ export MODULES_DIR := $(TOP_DIR)/module
 export CMSIS_DIR := $(TOP_DIR)/contrib/cmsis/git/CMSIS/Core
 export OS_DIR := $(TOP_DIR)/contrib/cmsis/git/CMSIS/RTOS2
 export DBG_DIR := $(TOP_DIR)/debugger
+export STM32_HAL_DIR := $(TOP_DIR)/contrib/stm32h7xx_hal
 
 BUILD_STRING := $(shell $(TOOLS_DIR)/build_string.py 2>/dev/null)
 export VERSION_STRING = v$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_PATCH)
@@ -46,6 +47,7 @@ DEFAULT_MODE := release
 DEFAULT_BUILD_PATH := $(TOP_DIR)/build
 DEFAULT_VERBOSE := n
 DEFAULT_DEBUGGER := n
+DEFAULT_STM32_HAL := n
 
 DEFAULT_LOG_LEVEL_debug := INFO
 DEFAULT_LOG_LEVEL_release := WARN
@@ -88,6 +90,13 @@ DEBUGGER ?= $(DEFAULT_DEBUGGER)
 ifeq ($(DEBUGGER),y)
     BUILD_HAS_DEBUGGER := yes
     export BUILD_HAS_DEBUGGER
+endif
+
+# Include stm32_hal library: y/n
+STM32_HAL ?= $(DEFAULT_STM32_HAL)
+ifeq ($(STM32_HAL),y)
+    BUILD_HAS_STM32_HAL := yes
+    export BUILD_HAS_STM32_HAL
 endif
 
 #
@@ -207,6 +216,11 @@ help:
 	@echo "        Value: <y|n>"
 	@echo "        Default: $(DEFAULT_DEBUGGER)"
 	@echo "        Include the debugger library."
+	@echo ""
+	@echo "    STM32_HAL"
+	@echo "        Value: <y|n>"
+	@echo "        Default: $(DEFAULT_STM32_HAL)"
+	@echo "        Include the stm32_hal library."
 	@echo ""
 	@echo "    LOG_LEVEL"
 	@echo "        Value: <TRACE|INFO|WARN|ERROR|CRIT>"
